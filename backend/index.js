@@ -14,18 +14,15 @@ const Port= 8001
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
-var corsOptions = {
-  origin: 'http://192.168.146.124:8001',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
 
-// app.use(cors())
+
+app.use(cors())
 
 app.get('/',function(req,res){
   res.send('Hello')
 })
 
-app.post('/login',cors(corsOptions), async (req,res) => {
+app.post('/login', async (req,res) => {
   const name = req.body.name;
   const password = req.body.password;
   console.log(name,password)
@@ -49,7 +46,7 @@ app.post('/login',cors(corsOptions), async (req,res) => {
   }
 })
 
-app.post('/assets',cors(corsOptions), async function(req,res){
+app.post('/assets', async function(req,res){
     const id = req.body.data
     console.log(req.body)
     try{
@@ -74,7 +71,7 @@ app.post('/assets',cors(corsOptions), async function(req,res){
 )
 
 
-app.get('/whname', cors(corsOptions), async (req,res)=>{
+app.get('/whname', async (req,res)=>{
 try{
   const pool = new sql.ConnectionPool(sqlConfig);
   await pool.connect();  
@@ -88,7 +85,7 @@ catch(err){
 })
 
 
-app.post('/totalassets', cors(corsOptions),async (req,res)=>{
+app.post('/totalassets',async (req,res)=>{
   const location = req.body.location
   console.log(location)
   try{
